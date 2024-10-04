@@ -1,0 +1,52 @@
+#Ash profile
+
+#vim : syntax=sh
+
+#No core files by default
+
+#ulimit -S -c 0 > /dev/null 2>&1                                                                    
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+runlevel=S
+
+prevlevel=N
+
+umask 022
+
+export PATH runlevel prevlevel
+
+mount -a
+
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+
+mdev -s
+
+mkdir -p /var/lock
+
+/bin/hostname -F /etc/hostname
+
+USER="`id -un`"
+
+LOGNAME=$USER
+
+PS1='[\u@\h \W]# '           
+
+PATH=$PATH
+
+HOSTNAME=`/bin/hostname`
+
+export USER LOGNAME PS1 PATH
+
+echo "Sunny" > /etc/hostname
+
+# 设置要检查的用户名
+USERNAME="messagebus"
+
+# 检查用户是否存在
+if id "$USERNAME" &>/dev/null; then
+    echo ""
+else
+    adduser -H -D "$USERNAME"
+    echo "user $USERNAME create success"
+fi

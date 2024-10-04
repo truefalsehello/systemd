@@ -1,0 +1,24 @@
+#! /bin/sh
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+runlevel=S
+
+prevlevel=N
+
+umask 022
+
+export PATH runlevel prevlevel
+
+mount -a
+
+mkdir /dev/pts
+
+mount -t devpts devpts /dev/pts
+
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+
+mdev -s
+
+mkdir -p /var/lock
+
+/bin/hostname -F /etc/hostname
